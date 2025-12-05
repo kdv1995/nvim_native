@@ -1,4 +1,4 @@
--- Native lsp pack
+-- VIM Native lsp pack
 vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/hrsh7th/nvim-cmp" },
@@ -14,6 +14,7 @@ vim.pack.add({
 	{
 		src = "https://github.com/nvim-lualine/lualine.nvim",
 	},
+	{ src = "https://github.com/nvimdev/dashboard-nvim" },
 	"https://github.com/nvim-lua/plenary.nvim",
 	"https://github.com/MunifTanjim/nui.nvim",
 	"https://github.com/nvim-tree/nvim-web-devicons",

@@ -1,0 +1,81 @@
+-- local keymap = vim.keymap
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("ts_ls", {}),
+--   callback = function(args)
+--     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+--
+--     if client:supports_method("textDocument/implementation") then
+--       keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.implementation()<cr>", { desc = "Code Implementation" })
+--     end
+--     -- Enable auto-completion. Note: Use CTRL-Y to select an item. |complete_CTRL-Y|
+--     if client:supports_method("textDocument/completion") then
+--       vim.opt.completeopt = { "menu", "menuone", "noselect" }
+--
+--       local function has_words_before()
+--         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+--         if col == 0 then
+--           return false
+--         end
+--         local text = vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+--         return text:sub(col, col):match("%s") == nil
+--       end
+--
+--       -- TAB = next completion item OR trigger completion OR insert tab
+--       vim.keymap.set("i", "<Tab>", function()
+--         if vim.fn.pumvisible() == 1 then
+--           return "<C-n>"
+--         elseif has_words_before() then
+--           return "<C-x><C-o>"
+--         else
+--           return "<Tab>"
+--         end
+--       end, { expr = true, noremap = true })
+--
+--       -- SHIFT+TAB = prev completion item
+--       vim.keymap.set("i", "<S-Tab>", function()
+--         if vim.fn.pumvisible() == 1 then
+--           return "<C-p>"
+--         else
+--           return "<S-Tab>"
+--         end
+--       end, { expr = true, noremap = true })
+--
+--       -- ENTER = confirm completion OR newline
+--       vim.keymap.set("i", "<CR>", function()
+--         if vim.fn.pumvisible() == 1 then
+--           return "<C-y>"
+--         else
+--           return "<CR>"
+--         end
+--       end, { expr = true, noremap = true })
+--
+--       -- CTRL-E = cancel completion
+--       vim.keymap.set("i", "<C-e>", function()
+--         if vim.fn.pumvisible() == 1 then
+--           return "<C-e>"
+--         end
+--       end, { expr = true, noremap = true })
+--
+--       -- Extra: manual trigger (like cmp.complete)
+--       vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { noremap = true })
+--
+--       -- Autotrigger LSP completion
+--       vim.lsp.completion.enable(true, client.id, args.buf, {
+--         autotrigger = true,
+--       })
+--     end -- Auto-format ("lint") on save.
+--     -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
+--     if
+--         not client:supports_method("textDocument/willSaveWaitUntil")
+--         and client:supports_method("textDocument/formatting")
+--     then
+--       vim.api.nvim_create_autocmd("BufWritePre", {
+--         group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
+--         buffer = args.buf,
+--         callback = function()
+--           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+--         end,
+--       })
+--     end
+--   end,
+-- })
