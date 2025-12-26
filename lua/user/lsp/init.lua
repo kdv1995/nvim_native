@@ -39,3 +39,5 @@ vim.lsp.enable({
 	-- "solidity_ls",
 	"tailwindcss",
 })
+
+require('luasnip.loaders.from_vscode').lazy_load()

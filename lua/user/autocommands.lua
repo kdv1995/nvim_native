@@ -28,10 +28,31 @@ augroup _alpha
 autocmd!
 autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
 augroup end
+
+
+
 ]])
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
 		require("nvim-tree.api").tree.open()
 	end,
+})
+
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+	group = vim.api.nvim_create_augroup("AutoSave", { clear = true }),
+	callback = function()
+		if vim.bo.readonly then
+			return
+		end
+		if vim.fn.filereadable(vim.fn.bufname("%")) ~= 1 then
+			return
+		end
+		if vim.bo.filetype == "gitcommit" or vim.bo.filetype == "help" then
+			return
+		end
+
+		vim.cmd("silent update")
+	end,
+	desc = "Auto-save on InsertLeave and TextChanged",
 })

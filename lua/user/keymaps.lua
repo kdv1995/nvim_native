@@ -148,3 +148,27 @@ keymap.set("n", "<leader>d", "<cmd>:BufDel<CR>", { desc = "Delete Buffer" })
 -- vim.keymap.set("n", "<leader>sR", "<cmd>Telescope registers<cr>", { desc = "Registers" })
 -- vim.keymap.set("n", "<leader>sk", "<cmd>Telescope keymaps<cr>", { desc = "Keymaps" })
 -- vim.keymap.set("n", "<leader>sC", "<cmd>Telescope commands<cr>", { desc = "Commands" })
+
+--Custom copy commands to extract classes from HTML tags to CSS file
+
+vim.keymap.set("v", "<leader>cl", function()
+	-- get visual selection lines
+	local lines = vim.fn.getline("'<", "'>")
+	local text = table.concat(lines, "\n")
+
+	local seen = {}
+	local out = {}
+
+	-- extract class="..."
+	for cls in text:gmatch('class%s*=%s*"([^"]+)"') do
+		for c in cls:gmatch("%S+") do
+			if not seen[c] then
+				seen[c] = true
+				table.insert(out, "." .. c .. " {}")
+			end
+		end
+	end
+
+	-- copy to system clipboard
+	vim.fn.setreg("+", table.concat(out, "\n"))
+end, { desc = "Extract classes → .class {}" })
